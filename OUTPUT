@@ -1,0 +1,5 @@
+[centos@ip-10-0-3-33 ~]$ docker run -d -p 8082:8080 --name web chandanarm/maven:latest
+0a83e42b4355841fefcb1bbb25e7e4ddf27f526f7aec12f56015d85f734e2f6a
+
+[centos@ip-10-0-3-33 ~]$ curl 18.222.145.245:8082/greeting
+Hello World[
