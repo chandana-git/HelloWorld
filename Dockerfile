@@ -1,3 +1,3 @@
-FROM adoptopenjdk/openjdk11:alpine-jre
+FROM openjdk:12-alpine
 ADD target/springboot-example.jar app.jar
 ENTRYPOINT ["java","-jar","app.jar"]
