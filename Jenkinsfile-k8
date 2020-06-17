@@ -23,7 +23,7 @@ stage('Push Docker Image'){
         
     sh "docker login -u chandanarm  -p ${dockerHubPwd}"
 }
-sh 'docker push chandanarm/maven:latest'
+sh 'docker push chandanarm/maven:latest' //pushing the image
 
 }
 stage("Deploy To Kuberates Cluster"){
