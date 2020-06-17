@@ -27,7 +27,7 @@ sh 'docker push chandanarm/maven:latest' //pushing the image
 
 }
 stage("Deploy To Kuberates Cluster"){
-      sh 'kubectl create -f deploy.yml'
+      sh 'kubectl create -f deploy.yml' //
       sh 'kubectl create -f svc.yml'
      }
 }
