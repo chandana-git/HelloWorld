@@ -1,0 +1,33 @@
+node {
+stage('SCM Checkout')
+{
+git 'https://github.com/chandana-git/HelloWorld.git'
+}
+
+stage('Compile Package from maven')
+{
+//since maven is installed as a plugin use tool in samsple step to find the command
+def mvnHome = tool name: 'MAVEN 3.6.3', type: 'maven'
+sh "${mvnHome}/bin/mvn clean package"
+}
+stage('archiving the artifact artifacts')
+{
+archiveArtifacts 'target/*.jar'
+}
+stage('Build Docker Image'){
+    //sh 'sudo chmod 666 /var/run/docker.sock'
+   sh 'docker build . -t chandanarm/maven'
+}
+stage('Push Docker Image'){
+    withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerHubPwd')]) {
+        
+    sh "docker login -u chandanarm  -p ${dockerHubPwd}"
+}
+sh 'docker push chandanarm/maven:latest'
+
+}
+stage("Deploy To Kuberates Cluster"){
+      sh 'kubectl create -f deploy.yml'
+      sh 'kubectl create -f svc.yml'
+     }
+}
